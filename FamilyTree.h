@@ -12,7 +12,7 @@ struct Node
 	bool sex;//sex=0->female  sex=1->male
 	int generation;
 
-	string fatherName;
+	string motherName;
 	string husbandNmae;
 
 	bool isWife;//isWife=0->daughter  isWife=1->wife

@@ -357,13 +357,13 @@ void printTree(Node* root)
 	}
 	else if (root->isWife)
 	{
-		cout << setw(((root->generation) - 1) * 3 + 1 + 1 + (root->name).length) << "-" << root->name << endl;	
+		cout << setw(((root->generation) - 1) * 4 + 1 + 1 + (root->name).length) << "-" << root->name << endl;	
 		printTree(root->right);
 		printTree(root->left);
 	}
 	else
 	{
-		cout << setw(((root->generation) - 1) * 3 + (root->name).length) << root->name << endl;
+		cout << setw(((root->generation) - 1) * 4 + (root->name).length) << root->name << endl;
 		printTree(root->left);
 		printTree(root->right);
 	}

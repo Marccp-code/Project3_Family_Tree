@@ -1,6 +1,7 @@
 #include"FamilyTree.h"
 #include<iostream>
 #include<fstream>
+#include<iomanip>
 #include<stdlib.h>
 
 
@@ -347,7 +348,7 @@ float FamilyTree::ColorBlindnessRate()
 	return totalColorBlindness() / size;
 }
 
-/*
+
 void printTree(Node* root)
 {
 	if (root == NULL)
@@ -356,19 +357,18 @@ void printTree(Node* root)
 	}
 	else if (root->isWife)
 	{
-		cout << "W-" << root->name << endl;
-		cout << " ";
-		printTree(root->left);
-
+		cout << setw(((root->generation) - 1) * 3 + 1 + 1 + (root->name).length) << "-" << root->name << endl;	
 		printTree(root->right);
+		printTree(root->left);
 	}
 	else
 	{
-		cout << root->name << endl;
+		cout << setw(((root->generation) - 1) * 3 + (root->name).length) << root->name << endl;
+		printTree(root->left);
+		printTree(root->right);
 	}
 }
 void FamilyTree::display()
 {
 	printTree(root);
 }
-*/

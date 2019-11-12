@@ -14,7 +14,7 @@ void writeTree(FILE* fout, Node* root)//recursive function
 	else
 	{
 		char* genbuf;
-		itoa(root->generation, genbuf, 10);//Õâ¸öº¯ÊýÍ·ÎÄ¼þÎªstdlib£¬°Ñint×ªÎªchar*
+		itoa(root->generation, genbuf, 10);//è¿™ä¸ªå‡½æ•°å¤´æ–‡ä»¶ä¸ºstdlibï¼ŒæŠŠintè½¬ä¸ºchar*
 
 		char* birthbuf;
 		itoa(root->birthYear, birthbuf, 10);
@@ -47,7 +47,7 @@ ErrorCode FamilyTree::writeToFile()
 	fout = fopen("FamilyTreeOutput.txt", "w+");
 	if (fout == NULL)
 	{
-		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
+		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
 		return failure;
 	}
 	else
@@ -63,7 +63,7 @@ ErrorCode FamilyTree::creatTreeFromFile()
 	ifstream fin("FamilyTreeInput.txt", ios::in);
 	if (!fin.is_open())
 	{
-		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
+		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
 		return failure;
 	}
 	else
@@ -87,13 +87,13 @@ ErrorCode FamilyTree::creatTreeFromFile()
 			}
 			insert(newMember);
 		}
-		
+
 
 		fin.close();
 
 	}
 
-	
+
 }
 void searchTree(Node* root, Node* & member, string name)//recursive function
 {
@@ -207,13 +207,13 @@ ErrorCode FamilyTree::PrintNodeInformation(Node* member)
 	else
 	{
 		cout << "*********************" << endl;
-		cout << "´úÊý£º" << member->generation << endl;
-		cout << "Ãû×Ö£º" << member->name << endl;
-		cout << "ÐÔ±ð£º" << (member->sex == 1) ? "ÄÐ\n" : "Å®\n";
+		cout << "ä»£æ•°ï¼š" << member->generation << endl;
+		cout << "åå­—ï¼š" << member->name << endl;
+		cout << "æ€§åˆ«ï¼š" << (member->sex == 1) ? "ç”·\n" : "å¥³\n";
 
-		cout << "ÉúÈÕ£º" << member->birthYear << endl;
-		cout << "ÌåÖØ£º" << member->weight << endl;
-		cout << "ºìÂÌÉ«Ã¤»ùÒòÇé¿ö£º" << member->colorGene << endl;
+		cout << "ç”Ÿæ—¥ï¼š" << member->birthYear << endl;
+		cout << "ä½“é‡ï¼š" << member->weight << endl;
+		cout << "çº¢ç»¿è‰²ç›²åŸºå› æƒ…å†µï¼š" << member->colorGene << endl;
 		cout << "*********************" << endl;
 	}
 }
@@ -232,23 +232,23 @@ ErrorCode FamilyTree::markDeath(Node* member)
 
 ErrorCode FamilyTree::recorrect(Node* member, int part, string item)
 {
-	
+
 	switch (part)
 	{
-		case 1:
-			member->name = item;
-			break;
-		case 5:
-			member->motherName = item;
-			break;
-		case 6:
-			member->husbandName = item;
-			break;
-		default:
-			return failure;
+	case 1:
+		member->name = item;
+		break;
+	case 5:
+		member->motherName = item;
+		break;
+	case 6:
+		member->husbandName = item;
+		break;
+	default:
+		return failure;
 	}
 	return success;
-		
+
 
 }
 
@@ -257,32 +257,32 @@ ErrorCode FamilyTree::recorrect(Node* member, int part, int item)
 
 	switch (part)
 	{
-		case 2:
-			member->sex = item;
-			break;
-		case 3:
-			member->generation = item;
-			break;
-		case 4:
-			member->lifeSpan = item;
-			break;
-		case 7:
-			member->isWife = item;
-			break;
-		case 8:
-			member->isDeadOrEx = item;
-			break;
-		case 9:
-			member->birthYear = item;
-			break;
-		case 10:
-			member->colorGene = item;
-			break;
-		case 11:
-			member->weight = item;
-			break;
-		default:
-			return failure;
+	case 2:
+		member->sex = item;
+		break;
+	case 3:
+		member->generation = item;
+		break;
+	case 4:
+		member->lifeSpan = item;
+		break;
+	case 7:
+		member->isWife = item;
+		break;
+	case 8:
+		member->isDeadOrEx = item;
+		break;
+	case 9:
+		member->birthYear = item;
+		break;
+	case 10:
+		member->colorGene = item;
+		break;
+	case 11:
+		member->weight = item;
+		break;
+	default:
+		return failure;
 	}
 	return success;
 
@@ -342,7 +342,6 @@ int FamilyTree::totalColorBlindness()
 	countColorBlindness(root, countPtr);
 	return count;
 }
-
 float FamilyTree::ColorBlindnessRate()
 {
 	return totalColorBlindness() / size;
@@ -357,7 +356,7 @@ void printTree(Node* root)
 	}
 	else if (root->isWife)
 	{
-		cout << setw(((root->generation) - 1) * 4 + 1 + 1 + (root->name).length) << "-" << root->name << endl;	
+		cout << setw(((root->generation) - 1) * 4 + 1 + 1 + (root->name).length) << "-" << root->name << endl;
 		printTree(root->right);
 		printTree(root->left);
 	}

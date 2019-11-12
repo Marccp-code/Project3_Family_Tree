@@ -27,7 +27,6 @@ struct Node
 
 	Node* left;//2.isWife=0->daughter or son->left is husband/NULL, right is his/her bros and siss
 	Node* right;//isWife=1->wife->left is her husband's next wife, right is her children
-
 	//void PrintNodeInformation();
 };
 
@@ -35,10 +34,10 @@ class FamilyTree
 {
 private:
 	int aliveSize;//assume today is 2019
-	Node* root;
 
 public:
 	int size;
+	Node* root;
 	FamilyTree()
 	{
 		size = 0;

@@ -13,10 +13,10 @@ void writeTree(FILE* fout, Node* root)//recursive function
 	}
 	else
 	{
-		char* genbuf;
+		char* genbuf = NULL;
 		itoa(root->generation, genbuf, 10);//这个函数头文件为stdlib，把int转为char*
 
-		char* birthbuf;
+		char* birthbuf = NULL;
 		itoa(root->birthYear, birthbuf, 10);
 
 		fprintf(fout, root->name.c_str());
@@ -90,10 +90,8 @@ ErrorCode FamilyTree::creatTreeFromFile()
 
 
 		fin.close();
-
+		return success;
 	}
-
-
 }
 void searchTree(Node* root, Node* & member, string name)//recursive function
 {
@@ -133,6 +131,8 @@ ErrorCode FamilyTree::insert(Node* newMember)
 	{
 		root = newMember;
 		size++;
+		newMember->left = NULL;
+		newMember->right = NULL;
 		return success;
 	}
 	if (newMember->isWife)
@@ -147,6 +147,8 @@ ErrorCode FamilyTree::insert(Node* newMember)
 			temp = temp->left;
 		}
 		temp->left = newMember;
+		newMember->left = NULL;
+		newMember->right = NULL;
 		size++;
 		return success;
 	}
@@ -163,6 +165,8 @@ ErrorCode FamilyTree::insert(Node* newMember)
 		}
 		temp->right = newMember;
 		size++;
+		newMember->left = NULL;
+		newMember->right = NULL;
 		return success;
 	}
 }
@@ -215,6 +219,7 @@ ErrorCode FamilyTree::PrintNodeInformation(Node* member)
 		cout << "体重：" << member->weight << endl;
 		cout << "红绿色盲基因情况：" << member->colorGene << endl;
 		cout << "*********************" << endl;
+		return success;
 	}
 }
 ErrorCode FamilyTree::markDeath(Node* member)
@@ -311,9 +316,9 @@ void countTotalLife(Node* root, int* totalLifeSpan)
 }
 int FamilyTree::countAverageLifeSpan()
 {
+	int i = 0;
 	int alredyDeadSize = size - aliveSize;
-	int* totalLifeSpan;
-	*(totalLifeSpan) = 0;
+	int* totalLifeSpan = &i;
 	countTotalLife(root, totalLifeSpan);
 	return (*totalLifeSpan) / alredyDeadSize;
 }
@@ -356,13 +361,13 @@ void printTree(Node* root)
 	}
 	else if (root->isWife)
 	{
-		cout << setw(((root->generation) - 1) * 4 + 1 + 1 + (root->name).length) << "-" << root->name << endl;
+		cout << setw(((root->generation) - 1) * 4 + 1 + 1 + (root->name).length()) << "-" << root->name << endl;
 		printTree(root->right);
 		printTree(root->left);
 	}
 	else
 	{
-		cout << setw(((root->generation) - 1) * 4 + (root->name).length) << root->name << endl;
+		cout << setw(((root->generation) - 1) * 4 + (root->name).length()) << root->name << endl;
 		printTree(root->left);
 		printTree(root->right);
 	}

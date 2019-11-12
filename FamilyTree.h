@@ -27,7 +27,7 @@ struct Node
 
 	Node* left;//2.isWife=0->daughter or son->left is husband/NULL, right is his/her bros and siss
 	Node* right;//isWife=1->wife->left is her husband's next wife, right is her children
-								
+
 	//void PrintNodeInformation();
 };
 
@@ -40,7 +40,7 @@ private:
 
 public:
 
-	FamilyTree() 
+	FamilyTree()
 	{
 		size = 0;
 		aliveSize = 0;
@@ -55,9 +55,9 @@ public:
 	ErrorCode writeToFile();//write our tree to file
 	ErrorCode insert(Node* newMember);
 	Node* search(string name);//如果得到的member的父节点指向member的指针不用修改
-	void search(string name, Node* & member);//如果得到的member的父节点指向member的指针要修改
+	void search(string name, Node*& member);//如果得到的member的父节点指向member的指针要修改
 	ErrorCode PrintNodeInformation(Node* member);
-	ErrorCode deleteMember(Node* & member);
+	ErrorCode deleteMember(Node*& member);
 
 	//这里的方法是先在main里面search,返回到一个node* 再调用recorrect函数，在mian里面给switch代号,表示修改哪一部分,item为修改后的内容
 	ErrorCode recorrect(Node* member, int part, string item);
@@ -75,7 +75,7 @@ public:
 
 	void display();
 
-	friend void writeTree(ofstream ofile, Node* root);
-	friend void searchTree(Node* root, Node* member, string name);//recursive function
+	friend void writeTree(FILE* fout, Node* root);
+	friend void searchTree(Node* root, Node*& member, string name);//recursive function
 
 };

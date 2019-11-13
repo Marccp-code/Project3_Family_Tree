@@ -22,7 +22,7 @@ struct Node
 	int birthYear;
 
 
-	int colorGene;// sex=0->female->0:AA,1:aa,2:Aa    sex=1->male->0:A,1:a
+	int colorGene;// sex=0->female->0:AA,1:aa,2:Aa    sex=1->male->0:a,1:A
 	int weight;
 
 	Node* left;//2.isWife=0->daughter or son->left is husband/NULL, right is his/her bros and siss
@@ -52,12 +52,12 @@ public:
 	ErrorCode creatTreeFromFile();//here to creat a tree from a file
 	ErrorCode writeToFile();//write our tree to file
 	ErrorCode insert(Node* newMember);
-	Node* search(string name);//Èç¹ûµÃµ½µÄmemberµÄ¸¸½ÚµãÖ¸ÏòmemberµÄÖ¸Õë²»ÓÃĞŞ¸Ä
-	void search(string name, Node*& member);//Èç¹ûµÃµ½µÄmemberµÄ¸¸½ÚµãÖ¸ÏòmemberµÄÖ¸ÕëÒªĞŞ¸Ä
+	Node* search(string name);//å¦‚æœå¾—åˆ°çš„memberçš„çˆ¶èŠ‚ç‚¹æŒ‡å‘memberçš„æŒ‡é’ˆä¸ç”¨ä¿®æ”¹
+	void search(string name, Node*& member);//å¦‚æœå¾—åˆ°çš„memberçš„çˆ¶èŠ‚ç‚¹æŒ‡å‘memberçš„æŒ‡é’ˆè¦ä¿®æ”¹
 	ErrorCode PrintNodeInformation(Node* member);
 	ErrorCode deleteMember(Node*& member);
 
-	//ÕâÀïµÄ·½·¨ÊÇÏÈÔÚmainÀïÃæsearch,·µ»Øµ½Ò»¸önode* ÔÙµ÷ÓÃrecorrectº¯Êı£¬ÔÚmianÀïÃæ¸øswitch´úºÅ,±íÊ¾ĞŞ¸ÄÄÄÒ»²¿·Ö,itemÎªĞŞ¸ÄºóµÄÄÚÈİ
+	//è¿™é‡Œçš„æ–¹æ³•æ˜¯å…ˆåœ¨mainé‡Œé¢search,è¿”å›åˆ°ä¸€ä¸ªnode* å†è°ƒç”¨recorrectå‡½æ•°ï¼Œåœ¨miané‡Œé¢ç»™switchä»£å·,è¡¨ç¤ºä¿®æ”¹å“ªä¸€éƒ¨åˆ†,itemä¸ºä¿®æ”¹åçš„å†…å®¹
 	ErrorCode recorrect(Node* member, int part, string item);
 	ErrorCode recorrect(Node* member, int part, int item);
 	ErrorCode markDeath(Node* member);
@@ -69,7 +69,7 @@ public:
 	{
 		return size;
 	}
-	int countAverageLifeSpan();//Í³¼ÆÆ½¾ùÊÙÃü
+	int countAverageLifeSpan();//ç»Ÿè®¡å¹³å‡å¯¿å‘½
 
 	void display();
 

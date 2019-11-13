@@ -14,7 +14,7 @@ void writeTree(FILE* fout, Node* root)//recursive function
 	else
 	{
 		char* genbuf = NULL;
-		itoa(root->generation, genbuf, 10);//è¿™ä¸ªå‡½æ•°å¤´æ–‡ä»¶ä¸ºstdlibï¼ŒæŠŠintè½¬ä¸ºchar*
+		itoa(root->generation, genbuf, 10);//Õâ¸öº¯ÊýÍ·ÎÄ¼þÎªstdlib£¬°Ñint×ªÎªchar*
 
 		char* birthbuf = NULL;
 		itoa(root->birthYear, birthbuf, 10);
@@ -47,7 +47,7 @@ ErrorCode FamilyTree::writeToFile()
 	fout = fopen("FamilyTreeOutput.txt", "w+");
 	if (fout == NULL)
 	{
-		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
+		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
 		return failure;
 	}
 	else
@@ -63,13 +63,14 @@ ErrorCode FamilyTree::creatTreeFromFile()
 	ifstream fin("FamilyTreeInput.txt", ios::in);
 	if (!fin.is_open())
 	{
-		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
+		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
 		return failure;
 	}
 	else
 	{
 		string sexName;
-
+		char buffer[200];
+		fin.getline(buffer, 190);
 		while (!fin.eof())
 		{
 			Node* newMember = new Node;
@@ -85,6 +86,8 @@ ErrorCode FamilyTree::creatTreeFromFile()
 			{
 				newMember->sex = 0;
 			}
+			newMember -> left = NULL;
+			newMember -> right = NULL;
 			insert(newMember);
 		}
 
@@ -131,8 +134,6 @@ ErrorCode FamilyTree::insert(Node* newMember)
 	{
 		root = newMember;
 		size++;
-		newMember->left = NULL;
-		newMember->right = NULL;
 		return success;
 	}
 	if (newMember->isWife)
@@ -147,8 +148,6 @@ ErrorCode FamilyTree::insert(Node* newMember)
 			temp = temp->left;
 		}
 		temp->left = newMember;
-		newMember->left = NULL;
-		newMember->right = NULL;
 		size++;
 		return success;
 	}
@@ -165,8 +164,6 @@ ErrorCode FamilyTree::insert(Node* newMember)
 		}
 		temp->right = newMember;
 		size++;
-		newMember->left = NULL;
-		newMember->right = NULL;
 		return success;
 	}
 }
@@ -211,13 +208,13 @@ ErrorCode FamilyTree::PrintNodeInformation(Node* member)
 	else
 	{
 		cout << "*********************" << endl;
-		cout << "ä»£æ•°ï¼š" << member->generation << endl;
-		cout << "åå­—ï¼š" << member->name << endl;
-		cout << "æ€§åˆ«ï¼š" << (member->sex == 1) ? "ç”·\n" : "å¥³\n";
+		cout << "´úÊý£º" << member->generation << endl;
+		cout << "Ãû×Ö£º" << member->name << endl;
+		cout << "ÐÔ±ð£º" << (member->sex == 1) ? "ÄÐ\n" : "Å®\n";
 
-		cout << "ç”Ÿæ—¥ï¼š" << member->birthYear << endl;
-		cout << "ä½“é‡ï¼š" << member->weight << endl;
-		cout << "çº¢ç»¿è‰²ç›²åŸºå› æƒ…å†µï¼š" << member->colorGene << endl;
+		cout << "ÉúÈÕ£º" << member->birthYear << endl;
+		cout << "ÌåÖØ£º" << member->weight << endl;
+		cout << "ºìÂÌÉ«Ã¤»ùÒòÇé¿ö£º" << member->colorGene << endl;
 		cout << "*********************" << endl;
 		return success;
 	}
@@ -361,7 +358,7 @@ void printTree(Node* root)
 	}
 	else if (root->isWife)
 	{
-		cout << setw(((root->generation) - 1) * 4 + 1 + 1 + (root->name).length()) << "-" << root->name << endl;
+		cout << setw((root->generation) * 4) << "-" << root->name << endl;
 		printTree(root->right);
 		printTree(root->left);
 	}

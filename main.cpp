@@ -34,7 +34,8 @@ int main() {
 		cout << "************************************************菜单************************************************" << endl << endl;
 		cout << "1.显示该树            2.显示成员信息            3.添加新成员" << endl << endl;
 		cout << "4.总体色盲情况        5.家谱中在世情况          6.家谱寿命情况" << endl << endl;//色盲人数与色盲率//在世人数//寿命总和与平均寿命
-		cout << "7.将成员标记为去世	   8.删除成员及其子树" << endl << endl;
+		cout << "7.将成员标记为去世    8.删除成员及其子树        9.色盲预测测试" << endl << endl;
+		cout << "10.将新信息写入文件   11.退出程序" << endl << endl;
 		cout << "****************************************************************************************************" << endl << endl;
 		cout << "请输入数字选择您想调用的功能:";
 		cin >> i;
@@ -139,6 +140,7 @@ int main() {
 			break;
 		case 8:
 			cout << "输入您要删去的家族成员： " << endl;
+			cin >> tempname;
 			mymember = NULL;
 			testcase.search(tempname, mymember);
 			if (testcase.deleteMember(mymember) != success) {
@@ -148,6 +150,14 @@ int main() {
 				cout << "删除成功！" << endl;
 			}
 			break;
+		case 9:
+			break;
+		case 10:
+			break;
+		case 11:
+			cout << "感谢您使用此程序！" << endl;
+			system("pause");
+			return 0;
 		default:
 			break;
 		}

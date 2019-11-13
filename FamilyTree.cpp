@@ -11,43 +11,42 @@ void writeTree(FILE* fout, Node* root)//recursive function
 	{
 		return;
 	}
+	
 	else
 	{
-		char* genbuf = NULL;
-		itoa(root->generation, genbuf, 10);//è¿™ä¸ªå‡½æ•°å¤´æ–‡ä»¶ä¸ºstdlibï¼ŒæŠŠintè½¬ä¸ºchar*
-
-		char* birthbuf = NULL;
-		itoa(root->birthYear, birthbuf, 10);
-
-		fprintf(fout, root->name.c_str());
-
-		fprintf(fout, "   ");
-
-		fprintf(fout, genbuf);
-
-		if (root->sex == 1)
-			fprintf(fout, "MALE");
-		else
-			fprintf(fout, "FEMALE");
-
-		fprintf(fout, "   ");
-
-		fprintf(fout, birthbuf);
-		fprintf(fout, "\n");
-
+		fprintf(fout, "%-10s%-10d%-20d%-10d%-20s%-20s%-10d%-10d%-20d%-20d%-10d ",root->name,root->sex,root->generation,root->lifeSpan,root->motherName,root->husbandName,root->isWife,root->isDeadOrEx,root->birthYear,root->colorGene,root->weight);//name
 
 		writeTree(fout, root->left);
 		writeTree(fout, root->right);
 	}
+
 }
 ErrorCode FamilyTree::writeToFile()
 {
 
 	FILE* fout;
-	fout = fopen("FamilyTreeOutput.txt", "w+");
+	fopen_s(&fout,"FamilyTreeOutput.txt", "w+");
 	if (fout == NULL)
 	{
-		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
+		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
+		return failure;
+	}
+	else
+	{
+		fprintf(fout, "name	sex	generation	lifeSpan	motherName	husbandName	isWife	isDead	birthYear		colorGene	weght\n");
+		writeTree(fout, root);
+
+	}
+	fclose(fout);
+	return success;
+}
+
+/*ErrorCode FamilyTree::writeToFile()
+{
+	ofstream fout("FamilyTreeOutput.txt", ios::out);
+	if (!fout.is_open())
+	{
+		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
 		return failure;
 	}
 	else
@@ -57,13 +56,13 @@ ErrorCode FamilyTree::writeToFile()
 	}
 	fclose(fout);
 	return success;
-}
+}*/
 ErrorCode FamilyTree::creatTreeFromFile()
 {
 	ifstream fin("FamilyTreeInput.txt", ios::in);
 	if (!fin.is_open())
 	{
-		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
+		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
 		return failure;
 	}
 	else
@@ -96,7 +95,7 @@ ErrorCode FamilyTree::creatTreeFromFile()
 		return success;
 	}
 }
-void searchTree(Node* root, Node* & member, string name)//recursive function
+void searchTree(Node* root, Node*& member, string name)//recursive function
 {
 	if (root == NULL)
 	{
@@ -123,7 +122,7 @@ Node* FamilyTree::search(string name)
 	searchTree(root, member, name);
 	return member;
 }
-void FamilyTree::search(string name, Node* & member)
+void FamilyTree::search(string name, Node*& member)
 {
 	member = NULL;
 	searchTree(root, member, name);
@@ -133,7 +132,7 @@ ErrorCode FamilyTree::insert(Node* newMember)
 	if (root == NULL)
 	{
 		root = newMember;
-		if (newMember->isDeadOrEx!= 0) {
+		if (newMember->isDeadOrEx != 0) {
 			this->aliveSize++;
 		}
 		size++;
@@ -176,7 +175,7 @@ ErrorCode FamilyTree::insert(Node* newMember)
 		return success;
 	}
 }
-void deleteTree(Node* root, int * countPtr)
+void deleteTree(Node* root, int* countPtr)
 {
 	if (root == NULL)
 	{
@@ -190,7 +189,7 @@ void deleteTree(Node* root, int * countPtr)
 		(*countPtr)++;
 	}
 }
-ErrorCode FamilyTree::deleteMember(Node* & member)
+ErrorCode FamilyTree::deleteMember(Node*& member)
 {
 	//Node* member = search(name);
 	if (member == NULL)
@@ -200,7 +199,7 @@ ErrorCode FamilyTree::deleteMember(Node* & member)
 	else
 	{
 		int count = 0;
-		int * countPtr = &count;
+		int* countPtr = &count;
 		deleteTree(member, countPtr);
 		member = NULL;
 		size -= count;
@@ -217,13 +216,13 @@ ErrorCode FamilyTree::PrintNodeInformation(Node* member)
 	else
 	{
 		cout << "*********************" << endl;
-		cout << "ä»£æ•°ï¼š" << member->generation << endl;
-		cout << "åå­—ï¼š" << member->name << endl;
-		cout << "æ€§åˆ«ï¼š" << (member->sex == 1) ? "ç”·" : "å¥³";
+		cout << "´úÊý£º" << member->generation << endl;
+		cout << "Ãû×Ö£º" << member->name << endl;
+		cout << "ÐÔ±ð£º" << (member->sex == 1) ? "ÄÐ" : "Å®";
 		cout << endl;
-		cout << "ç”Ÿæ—¥ï¼š" << member->birthYear << endl;
-		cout << "ä½“é‡ï¼š" << member->weight << endl;
-		cout << "çº¢ç»¿è‰²ç›²åŸºå› æƒ…å†µï¼š" << member->colorGene << endl;
+		cout << "ÉúÈÕ£º" << member->birthYear << endl;
+		cout << "ÌåÖØ£º" << member->weight << endl;
+		cout << "ºìÂÌÉ«Ã¤»ùÒòÇé¿ö£º" << member->colorGene << endl;
 		cout << "*********************" << endl;
 		return success;
 	}
@@ -328,7 +327,7 @@ int FamilyTree::countAverageLifeSpan()
 	countTotalLife(root, totalLifeSpan);
 	return (*totalLifeSpan) / alredyDeadSize;
 }
-void countColorBlindness(Node *root, int * countPtr)
+void countColorBlindness(Node* root, int* countPtr)
 {
 	if (root == NULL)
 	{

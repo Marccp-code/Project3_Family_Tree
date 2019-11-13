@@ -71,34 +71,101 @@ int main() {
 			cout << "名字：" << endl;
 			cin >> name;
 			insertcase->name = name;
-			cout << "母亲" << endl;
-			cin >> motherName;
-			insertcase->motherName = motherName;
-			cout << "性别：" << endl;
+			while (1) {
+				cout << "母亲" << endl;
+				cin >> motherName;
+				Node* search_mum = testcase.search(motherName);
+				if (search_mum == NULL) {
+					cout << "没有在家谱树中找到该人！请重新输入!" << endl << endl;
+				}
+				else {
+					insertcase->motherName = motherName;
+					break;
+				}
+			}
+
+			cout << "性别(女输入0,男输入非0数字即可)：" << endl;
 			cin >> sex;
-			insertcase->sex = sex;
+			while (1)
+			{
+				if (sex != 0 || sex != 1)
+				{
+					cout << "性别输入有误，请按照格式输入！回到主菜单。";
+					break;
+				}
+				else
+				{
+					insertcase->sex = sex;
+				}
+			}
+			
+			
 			if (sex == 0) {
 				cout << "是否为某人的妻子？如果是请输入1" << endl;
 				cin >> judge;
 				if (judge == 1) {
 					insertcase->isWife = 1;
-					cout << "请输入丈夫的姓名" << endl << "***注意，我们严格区分大小写***" << endl;
-					cin >> tempname;
-					insertcase->husbandName = tempname;
+					while (1) {
+						cout << "请输入丈夫的姓名" << endl << "***注意，我们严格区分大小写***" << endl;
+						cin >> tempname;
+						Node* search_husband = testcase.search(tempname);
+						if (search_husband == NULL) {
+							cout << "没有在家谱树中找到该人！请重新输入!" << endl<<endl;
+						}
+						else {
+							insertcase->husbandName = tempname;
+							break;
+						}
+					}
+				}
+				else {
+					insertcase->isWife = 0;
 				}
 			}
-			else {
-				insertcase->isWife = 0;
-			}
-			cout << "生日：" << endl;
+			cout << "生日：(0~3000)" << endl;
 			cin >> birthYear;
-			insertcase->birthYear = birthYear;
-			cout << "体重：" << endl;
+			while (1)
+			{
+				if (birthYear>3000||birthYear<0)
+				{
+					cout << "生日输入有误，请按照格式输入！回到主菜单。";
+					break;
+				}
+				else
+				{
+					insertcase->birthYear = birthYear;
+				}
+			}
+			cout << "体重：(0~3000)" << endl;
+
 			cin >> weight;
-			insertcase->weight = weight;
+			while (1)
+			{
+				if (weight> 3000 || weight < 0)
+				{
+					cout << "体重输入有误，请按照格式输入！回到主菜单。";
+					break;
+				}
+				else
+				{
+					insertcase->weight= weight;
+				}
+			}
+
 			cout << "红绿色盲基因情况：" << endl;
 			cin >> colorGene;
-			insertcase->colorGene = colorGene;
+			while (1)
+			{
+				if (colorGene > 2 || weight < 0)
+				{
+					cout << "基因输入有误，请按照格式输入！回到主菜单。";
+					break;
+				}
+				else
+				{
+					insertcase->colorGene = colorGene;
+				}
+			}
 			insertcase->left = NULL;
 			insertcase->right = NULL;
 			cout << "*********************" << endl;
@@ -130,7 +197,11 @@ int main() {
 			cout << "输入您要标记为去世的家族成员： " << endl;
 			cin >> tempname;
 			mymember = testcase.search(tempname);
-			;
+			if (mymember->isDeadOrEx == 1) {
+				cout << "该成员已经死亡，不能再标记！" << endl;
+				cout << "请重新调用此功能！" << endl;
+				break;
+			}
 			if (testcase.markDeath(mymember) != success) {
 				cout << "标记失败！" << endl;
 			}
@@ -140,6 +211,7 @@ int main() {
 			break;
 		case 8:
 			cout << "输入您要删去的家族成员： " << endl;
+			cout << "********孩子会抱错，妻子不会娶错，所以不能删去妻子哦！！********" << endl;
 			cin >> tempname;
 			mymember = NULL;
 			testcase.search(tempname, mymember);
@@ -151,14 +223,86 @@ int main() {
 			}
 			break;
 		case 9:
+			cout << "少生优生幸福一生是我国计划生育的口号\n提前判断后代基因类型有助于计划生育工作的展开，为家庭的幸福美满做贡献！" << endl;
+			cout << "请输入本家族预测对象（父母）名字：" << endl;
+			mymember = NULL;
+			cin >> tempname;
+			testcase.search(tempname, mymember);
+			if (mymember == NULL)
+			{
+				cout << "没有此人！返回主菜单。" << endl;
+				continue;
+			}
+			else
+			{
+				cout << "请输入配偶的红绿色盲基因类型（女性：0->AA   1->Aa  2->aa; 男性：0->A  1->a)  :" << endl;
+				int partner;
+				cin >> partner;
+				string predication;
+
+				if (mymember->sex == 0)//女性
+				{
+					switch (mymember->colorGene)
+					{
+					case 2://XaXa
+						if (partner == 1)//XaY
+							predication = "孩子有100%概率为色盲XaXa/XaY。";
+						else if (partner == 0)//XAY
+							predication = "	男孩子有100%概率为色盲XaY，女孩子全为携带者XAXa.";
+						break;
+					case 1://XAXa
+						if (partner == 1)//XaY
+							predication = "男孩50%概率为正常XAY，50%概率为色盲患者XaY；女孩50%概率为携带者XAXa，50%概率为色盲患者XaXa";
+						else if (partner == 0)//XAY
+							predication = "	男孩50%概率为正常XAY，50%概率为色盲患者XaY；女孩50%概率为携带者XAXa，50%概率为正常XAXA.";
+						break;
+					case 0://XAXA
+						if (partner == 1)//XaY
+							predication = "男孩子全为正常XAY,女孩子全为携带者XAXa.";
+						else if (partner == 0)//XAY
+							predication = "	孩子全为正常人XAXA,XAY";
+						break;
+					}
+				}
+				else if (mymember->sex == 1)//男性
+				{
+					switch (mymember->colorGene)
+					{
+					case 0://XAY
+						if (partner == 0)//XAXA
+							predication = "孩子有100%概率为正常人。";
+						else if (partner == 1)//XAXa
+							predication = "	男孩子有50%概率为色盲XaY，有50%概率为正常XAY；女孩子50%为携带者XAXa，50%为正常XAXA.";
+						else if (partner == 2)//XaXa
+							predication = "	男孩子有100%概率为色盲XaY，女孩子全为携带者XAXa.";
+						break;
+					case 1://XaY
+						if (partner == 0)//XAXA
+							predication = "男孩子全为正常人XAY；女孩子全为携带者XAXa";
+						else if (partner == 1)//XAXa
+							predication = "	男孩子有50%概率为色盲XaY，有50%概率为正常XAY；女孩子50%为携带者XAXa，50%为色盲XaXa";
+						else if (partner == 2)//XaXa
+							predication = "	孩子全为色盲患者XaY/XaXa.";
+						break;
+					}
+				}
+				cout << predication << endl << endl;
+			}
 			break;
 		case 10:
+			if (testcase.writeToFile() != success) {
+				cout << "写入文件失败，请重新调用此功能！" << endl;
+			}
+			else {
+				cout << "写入文件成功！" << endl;
+			}
 			break;
 		case 11:
 			cout << "感谢您使用此程序！" << endl;
 			system("pause");
 			return 0;
 		default:
+			cout << "输入错误！！请重新输入！！" << endl;
 			break;
 		}
 	}

@@ -6,22 +6,22 @@ using namespace std;
 
 int main() {
 	FamilyTree testcase;
-	cout<<"æ­£åœ¨å°†å®¶è°±æ ‘æ–‡ä»¶å¯¼å…¥ç¨‹åºä¸­......"<<endl;
+	cout << "ÕýÔÚ½«¼ÒÆ×Ê÷ÎÄ¼þµ¼Èë³ÌÐòÖÐ......" << endl;
 	for (int i = 0; i < 1000000; i++) {
-		
+
 	}
-	//å±•ç¤ºèœå•
+	//Õ¹Ê¾²Ëµ¥
 	if (testcase.creatTreeFromFile() != success) {
-		cout << "å¯¼å…¥å¤±è´¥ï¼Œè¯·è¾“å…¥ä»»æ„é”®é‡å¯ç¨‹åº" << endl;
-		system("pause");
+		cout << "µ¼ÈëÊ§°Ü£¬ÇëÊäÈëÈÎÒâ¼üÖØÆô³ÌÐò" << endl;
+		//system("pause");
 		return 0;
 	}
-	cout << "æˆ‘ä»¬å·²ç»å¯¼å…¥äº†ä¸€æ£µå®¶è°±æ ‘åˆ°æ­¤ç¨‹åºä¸­" << endl ;
-	cout << "æ¯å½“ä¸€ä¸ªåŠŸèƒ½ä½¿ç”¨å®Œæ¯•åŽï¼Œèœå•ä¼šé‡æ–°æ˜¾ç¤ºå‡ºæ¥ï¼Œæ‚¨å¯ä»¥ç»§ç»­ä½¿ç”¨å…¶ä»–åŠŸèƒ½" << endl << endl;
+	cout << "ÎÒÃÇÒÑ¾­µ¼ÈëÁËÒ»¿Ã¼ÒÆ×Ê÷µ½´Ë³ÌÐòÖÐ" << endl;
+	cout << "Ã¿µ±Ò»¸ö¹¦ÄÜÊ¹ÓÃÍê±Ïºó£¬²Ëµ¥»áÖØÐÂÏÔÊ¾³öÀ´£¬Äú¿ÉÒÔ¼ÌÐøÊ¹ÓÃÆäËû¹¦ÄÜ" << endl << endl;
 	while (1) {
 		int i;
 		int judge;
-		string tempname = "æ— ";
+		string tempname = "ÎÞ";
 		Node *insertcase = new Node;
 		Node *mymember;
 		int generation;
@@ -31,26 +31,26 @@ int main() {
 		int birthYear;
 		int weight;
 		int colorGene;
-		cout << "************************************************èœå•************************************************" << endl << endl;
-		cout << "1.æ˜¾ç¤ºè¯¥æ ‘            2.æ˜¾ç¤ºæˆå‘˜ä¿¡æ¯            3.æ·»åŠ æ–°æˆå‘˜" << endl << endl;
-		cout << "4.æ€»ä½“è‰²ç›²æƒ…å†µ        5.å®¶è°±ä¸­åœ¨ä¸–æƒ…å†µ          6.å®¶è°±å¯¿å‘½æƒ…å†µ" << endl << endl;//è‰²ç›²äººæ•°ä¸Žè‰²ç›²çŽ‡//åœ¨ä¸–äººæ•°//å¯¿å‘½æ€»å’Œä¸Žå¹³å‡å¯¿å‘½
-		cout << "7.å°†æˆå‘˜æ ‡è®°ä¸ºåŽ»ä¸–	   8.åˆ é™¤æˆå‘˜åŠå…¶å­æ ‘" << endl << endl;
+		cout << "************************************************²Ëµ¥************************************************" << endl << endl;
+		cout << "1.ÏÔÊ¾¸ÃÊ÷            2.ÏÔÊ¾³ÉÔ±ÐÅÏ¢            3.Ìí¼ÓÐÂ³ÉÔ±" << endl << endl;
+		cout << "4.×ÜÌåÉ«Ã¤Çé¿ö        5.¼ÒÆ×ÖÐÔÚÊÀÇé¿ö          6.¼ÒÆ×ÊÙÃüÇé¿ö" << endl << endl;//É«Ã¤ÈËÊýÓëÉ«Ã¤ÂÊ//ÔÚÊÀÈËÊý//ÊÙÃü×ÜºÍÓëÆ½¾ùÊÙÃü
+		cout << "7.½«³ÉÔ±±ê¼ÇÎªÈ¥ÊÀ	   8.É¾³ý³ÉÔ±¼°Æä×ÓÊ÷" << endl << endl;
 		cout << "****************************************************************************************************" << endl << endl;
-		cout << "è¯·è¾“å…¥æ•°å­—é€‰æ‹©æ‚¨æƒ³è°ƒç”¨çš„åŠŸèƒ½:" ;
+		cout << "ÇëÊäÈëÊý×ÖÑ¡ÔñÄúÏëµ÷ÓÃµÄ¹¦ÄÜ:";
 		cin >> i;
 		switch (i)
 		{
 		case 1:
-			cout << "å®¶è°±æ ‘å¦‚ä¸‹ï¼š"<<endl<<endl;
+			cout << "¼ÒÆ×Ê÷ÈçÏÂ£º" << endl << endl;
 			testcase.display();
 			break;
 		case 2:
-			cout << "è¯·è¾“å…¥æ‚¨æƒ³æŸ¥è¯¢çš„æˆå‘˜çš„å§“å"<<endl<<"***æ³¨æ„ï¼Œæˆ‘ä»¬ä¸¥æ ¼åŒºåˆ†å¤§å°å†™***" << endl;
+			cout << "ÇëÊäÈëÄúÏë²éÑ¯µÄ³ÉÔ±µÄÐÕÃû" << endl << "***×¢Òâ£¬ÎÒÃÇÑÏ¸ñÇø·Ö´óÐ¡Ð´***" << endl;
 			cin >> tempname;
 			Node* toSearchGuy;
 			while (1) {
 				if (testcase.search(tempname) == NULL) {
-					cout << "æ‰¾ä¸åˆ°è¯¥æˆå‘˜çš„ä¿¡æ¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+					cout << "ÕÒ²»µ½¸Ã³ÉÔ±µÄÐÅÏ¢£¬ÇëÖØÐÂÊäÈë£¡" << endl;
 					cin >> tempname;
 				}
 				else {
@@ -61,44 +61,46 @@ int main() {
 			}
 			break;
 		case 3:
-			
-			cout<<"è¯·è¾“å…¥è¯¥æˆå‘˜çš„æ‰€æœ‰ä¿¡æ¯"<<endl; 
+
+			cout << "ÇëÊäÈë¸Ã³ÉÔ±µÄËùÓÐÐÅÏ¢" << endl;
 			cout << "*********************" << endl;
-			cout << "ä»£æ•°ï¼š" << endl; 
+			cout << "´úÊý£º" << endl;
 			cin >> generation;
 			insertcase->generation = generation;
-			cout << "åå­—ï¼š" << endl; 
+			cout << "Ãû×Ö£º" << endl;
 			cin >> name;
 			insertcase->name;
-			cout << "æ¯äº²" << endl; 
+			cout << "Ä¸Ç×" << endl;
 			cin >> motherName;
 			insertcase->motherName = motherName;
-			cout << "æ€§åˆ«ï¼š" << endl;
+			cout << "ÐÔ±ð£º" << endl;
 			cin >> sex;
 			insertcase->sex = sex;
 			if (sex == 0) {
-				cout << "æ˜¯å¦ä¸ºæŸäººçš„å¦»å­ï¼Ÿå¦‚æžœæ˜¯è¯·è¾“å…¥1" << endl;
+				cout << "ÊÇ·ñÎªÄ³ÈËµÄÆÞ×Ó£¿Èç¹ûÊÇÇëÊäÈë1" << endl;
 				cin >> judge;
 				if (judge == 1) {
 					insertcase->isWife = 1;
-					cout << "è¯·è¾“å…¥ä¸ˆå¤«çš„å§“å" << endl << "***æ³¨æ„ï¼Œæˆ‘ä»¬ä¸¥æ ¼åŒºåˆ†å¤§å°å†™***" << endl;
+					cout << "ÇëÊäÈëÕÉ·òµÄÐÕÃû" << endl << "***×¢Òâ£¬ÎÒÃÇÑÏ¸ñÇø·Ö´óÐ¡Ð´***" << endl;
 					cin >> tempname;
 					insertcase->husbandName = tempname;
 				}
 			}
-			cout << "ç”Ÿæ—¥ï¼š" << endl; 
+			cout << "ÉúÈÕ£º" << endl;
 			cin >> birthYear;
 			insertcase->birthYear = birthYear;
-			cout << "ä½“é‡ï¼š" << endl;
+			cout << "ÌåÖØ£º" << endl;
 			cin >> weight;
 			insertcase->weight = weight;
-			cout << "çº¢ç»¿è‰²ç›²åŸºå› æƒ…å†µï¼š" << endl; 
+			cout << "ºìÂÌÉ«Ã¤»ùÒòÇé¿ö£º" << endl;
 			cin >> colorGene;
 			insertcase->colorGene = colorGene;
+			insertcase->left = NULL;
+			insertcase->right = NULL;
 			cout << "*********************" << endl;
 			if (testcase.insert(insertcase) == success) {
 				int tempintnum;
-				cout << "åŠ å…¥æ–°æˆå‘˜æˆåŠŸï¼å¦‚æžœéœ€è¦é‡æ–°æ˜¾ç¤ºæ ‘è¯·è¾“å…¥1ï¼Œå¦åˆ™è¾“å…¥ä»»æ„æ•°å­—å›žè½¦é€€å‡ºæ­¤åŠŸèƒ½" << endl;
+				cout << "¼ÓÈëÐÂ³ÉÔ±³É¹¦£¡Èç¹ûÐèÒªÖØÐÂÏÔÊ¾Ê÷ÇëÊäÈë1£¬·ñÔòÊäÈëÈÎÒâÊý×Ö»Ø³µÍË³ö´Ë¹¦ÄÜ" << endl;
 				cin >> tempintnum;
 				if (tempintnum == 1) {
 					testcase.display();
@@ -106,43 +108,43 @@ int main() {
 			}
 			break;
 		case 4:
-			cout << "è¯¥å®¶æ—çº¢ç»¿è‰²ç›²æ€»ä½“æƒ…å†µå¦‚ä¸‹ï¼š" << endl;
-			cout << "çº¢ç»¿è‰²ç›²æ‚£è€…äººæ•°ä¸ºï¼š "<<testcase.totalColorBlindness() <<" äºº"<< endl;
-			cout << "çº¢ç»¿è‰²ç›²æ‚£ç—…çŽ‡ä¸ºï¼š " << testcase.ColorBlindnessRate() << "%" << endl;
+			cout << "¸Ã¼Ò×åºìÂÌÉ«Ã¤×ÜÌåÇé¿öÈçÏÂ£º" << endl;
+			cout << "ºìÂÌÉ«Ã¤»¼ÕßÈËÊýÎª£º " << testcase.totalColorBlindness() << " ÈË" << endl;
+			cout << "ºìÂÌÉ«Ã¤»¼²¡ÂÊÎª£º " << testcase.ColorBlindnessRate() << "%" << endl;
 			break;
 		case 5:
-			cout << "å®¶è°±æ ‘ä¸­å…±æœ‰ï¼š " << testcase.countAliveSize() << " äººåœ¨ä¸–" << endl;
-			cout << "å…±æœ‰ï¼š " << testcase.size-testcase.countAliveSize() << " äººè¿‡ä¸–" << endl;
+			cout << "¼ÒÆ×Ê÷ÖÐ¹²ÓÐ£º " << testcase.countAliveSize() << " ÈËÔÚÊÀ" << endl;
+			cout << "¹²ÓÐ£º " << testcase.size - testcase.countAliveSize() << " ÈË¹ýÊÀ" << endl;
 			break;
 		case 6:
-			cout << "è¯¥å®¶æ—å¹³å‡å¯¿å‘½ä¸ºï¼š " << testcase.countAverageLifeSpan() << " å²" << endl;
+			cout << "¸Ã¼Ò×åÆ½¾ùÊÙÃüÎª£º " << testcase.countAverageLifeSpan() << " Ëê" << endl;
 			break;
 		case 7:
-			cout << "è¾“å…¥æ‚¨è¦æ ‡è®°ä¸ºåŽ»ä¸–çš„å®¶æ—æˆå‘˜ï¼š " <<endl;
+			cout << "ÊäÈëÄúÒª±ê¼ÇÎªÈ¥ÊÀµÄ¼Ò×å³ÉÔ±£º " << endl;
 			cin >> tempname;
 			mymember = testcase.search(tempname);
 			;
 			if (testcase.markDeath(mymember) != success) {
-				cout << "æ ‡è®°å¤±è´¥ï¼" << endl;
+				cout << "±ê¼ÇÊ§°Ü£¡" << endl;
 			}
 			else {
-				cout << "æ ‡è®°æˆåŠŸï¼" << endl;
+				cout << "±ê¼Ç³É¹¦£¡" << endl;
 			}
 			break;
 		case 8:
-			cout << "è¾“å…¥æ‚¨è¦åˆ åŽ»çš„å®¶æ—æˆå‘˜ï¼š " << endl;
+			cout << "ÊäÈëÄúÒªÉ¾È¥µÄ¼Ò×å³ÉÔ±£º " << endl;
 			mymember = NULL;
 			testcase.search(tempname, mymember);
 			if (testcase.deleteMember(mymember) != success) {
-				cout << "åˆ é™¤å¤±è´¥ï¼" << endl;
+				cout << "É¾³ýÊ§°Ü£¡" << endl;
 			}
 			else {
-				cout << "åˆ é™¤æˆåŠŸï¼" << endl;
+				cout << "É¾³ý³É¹¦£¡" << endl;
 			}
 			break;
 		default:
 			break;
 		}
 	}
-	system("pause");
+	//system("pause");
 }

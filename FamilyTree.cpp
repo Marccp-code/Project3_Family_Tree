@@ -14,7 +14,7 @@ void writeTree(FILE* fout, Node* root)//recursive function
 	else
 	{
 		char* genbuf = NULL;
-		itoa(root->generation, genbuf, 10);//Õâ¸öº¯ÊýÍ·ÎÄ¼þÎªstdlib£¬°Ñint×ªÎªchar*
+		itoa(root->generation, genbuf, 10);//è¿™ä¸ªå‡½æ•°å¤´æ–‡ä»¶ä¸ºstdlibï¼ŒæŠŠintè½¬ä¸ºchar*
 
 		char* birthbuf = NULL;
 		itoa(root->birthYear, birthbuf, 10);
@@ -47,7 +47,7 @@ ErrorCode FamilyTree::writeToFile()
 	fout = fopen("FamilyTreeOutput.txt", "w+");
 	if (fout == NULL)
 	{
-		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
+		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
 		return failure;
 	}
 	else
@@ -63,7 +63,7 @@ ErrorCode FamilyTree::creatTreeFromFile()
 	ifstream fin("FamilyTreeInput.txt", ios::in);
 	if (!fin.is_open())
 	{
-		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
+		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
 		return failure;
 	}
 	else
@@ -86,8 +86,8 @@ ErrorCode FamilyTree::creatTreeFromFile()
 			{
 				newMember->sex = 0;
 			}
-			newMember -> left = NULL;
-			newMember -> right = NULL;
+			newMember->left = NULL;
+			newMember->right = NULL;
 			insert(newMember);
 		}
 
@@ -133,6 +133,9 @@ ErrorCode FamilyTree::insert(Node* newMember)
 	if (root == NULL)
 	{
 		root = newMember;
+		if (newMember->isDeadOrEx!= 0) {
+			this->aliveSize++;
+		}
 		size++;
 		return success;
 	}
@@ -148,6 +151,9 @@ ErrorCode FamilyTree::insert(Node* newMember)
 			temp = temp->left;
 		}
 		temp->left = newMember;
+		if (newMember->isDeadOrEx != 0) {
+			this->aliveSize++;
+		}
 		size++;
 		return success;
 	}
@@ -163,6 +169,9 @@ ErrorCode FamilyTree::insert(Node* newMember)
 			temp = temp->right;
 		}
 		temp->right = newMember;
+		if (newMember->isDeadOrEx != 0) {
+			this->aliveSize++;
+		}
 		size++;
 		return success;
 	}
@@ -208,13 +217,13 @@ ErrorCode FamilyTree::PrintNodeInformation(Node* member)
 	else
 	{
 		cout << "*********************" << endl;
-		cout << "´úÊý£º" << member->generation << endl;
-		cout << "Ãû×Ö£º" << member->name << endl;
-		cout << "ÐÔ±ð£º" << (member->sex == 1) ? "ÄÐ\n" : "Å®\n";
-
-		cout << "ÉúÈÕ£º" << member->birthYear << endl;
-		cout << "ÌåÖØ£º" << member->weight << endl;
-		cout << "ºìÂÌÉ«Ã¤»ùÒòÇé¿ö£º" << member->colorGene << endl;
+		cout << "ä»£æ•°ï¼š" << member->generation << endl;
+		cout << "åå­—ï¼š" << member->name << endl;
+		cout << "æ€§åˆ«ï¼š" << (member->sex == 1) ? "ç”·" : "å¥³";
+		cout << endl;
+		cout << "ç”Ÿæ—¥ï¼š" << member->birthYear << endl;
+		cout << "ä½“é‡ï¼š" << member->weight << endl;
+		cout << "çº¢ç»¿è‰²ç›²åŸºå› æƒ…å†µï¼š" << member->colorGene << endl;
 		cout << "*********************" << endl;
 		return success;
 	}

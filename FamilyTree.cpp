@@ -1,94 +1,73 @@
+//Í·ÎÄ¼þ²¿·Ö
 #include"FamilyTree.h"
 #include<iostream>
 #include<fstream>
 #include<iomanip>
 #include<stdlib.h>
 
-
-void writeTree(FILE* fout, Node* root)//recursive function
-
+//º¯ÊýÊµÏÖ
+void writeTree(FILE* fout, Node* root)//Ð´ÈëÎÄ¼þµÝ¹éº¯Êý
 {
-
-	if (root == NULL)
-
+	if (root == NULL)//·µ»ØÌõ¼þ
 	{
-
 		return;
-
 	}
-
-
-
 	else
-
 	{
-
+		//¸ñÊ½»¯×ó¶ÔÆëÐ´ÈëtxtÎÄ±¾ÎÄ¼þ
 		fprintf(fout, "%-12s%-15d%-25d%-20d%-25s%-31s%-15d%-17d%-25d%-28d%-21d\n", root->name.c_str(), root->sex, root->generation, root->lifeSpan, root->motherName.c_str(), root->husbandName.c_str(), root->isWife, root->isDeadOrEx, root->birthYear, root->colorGene, root->weight);//name
-
-
-
+		//Ð´Èë×ó×ÓÊ÷
 		writeTree(fout, root->left);
-
+		//Ð´ÈëÓÒ×ÓÊ÷
 		writeTree(fout, root->right);
 
 	}
-
-
-
 }
 ErrorCode FamilyTree::writeToFile()
-
 {
-
-
-
 	FILE* fout;
 
-	fopen_s(&fout, "FamilyTreeOutput.txt", "w+");
+	fopen_s(&fout, "FamilyTreeOutput.txt", "w+");//Ð´ÈëÄ£Ê½´ò¿ªÎÄ¼þ
 
-	if (fout == NULL)
-
+	if (fout == NULL)//´ò¿ªÊ§°Ü
 	{
-
-		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
-
+		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
 		return failure;
-
 	}
-
 	else
-
 	{
-
+		//Ð´Èë±íÍ·
 		fprintf(fout, "name	sex	generation         lifeSpan        motherName    husbandName               isWife    isDead    birthYear             colorGene                weight\n");
-
+		//µ÷ÓÃµÝ¹éÐ´Èëº¯Êý
 		writeTree(fout, root);
-
-
-
 	}
 
-	fclose(fout);
+	fclose(fout);//¹Ø±ÕÎÄ¼þ
 
 	return success;
-
 }
 ErrorCode FamilyTree::creatTreeFromFile()
 {
-	ifstream fin("FamilyTreeInput.txt", ios::in);
-	if (!fin.is_open())
+	ifstream fin;
+	fin.open("FamilyTreeInput.txt", ios::in);//¶ÁÈ¡ÐÎÊ½´ò¿ªÎÄ¼þ
+
+	if (!fin.is_open())//´ò¿ªÊ§°Ü
 	{
-		cout << "æ–‡ä»¶ä¸èƒ½æ‰“å¼€" << endl;
+		cout << "ÎÄ¼þ²»ÄÜ´ò¿ª" << endl;
 		return failure;
 	}
-	else
+	else//´ò¿ª³É¹¦
 	{
 		string sexName;
 		char buffer[200];
+
 		fin.getline(buffer, 190);
-		while (!fin.eof())
+
+		while (!fin.eof())//Ñ­»·½¨Ê÷
 		{
 			Node* newMember = new Node;
+
+			//ÓÃÊäÈë²ÎÊý¹¹½¨½Úµã
 			fin >> newMember->name >> sexName >> newMember->generation >> newMember->lifeSpan >> newMember->motherName;
 			fin >> newMember->husbandName >> newMember->isWife >> newMember->isDeadOrEx >> newMember->birthYear;
 			fin >> newMember->colorGene >> newMember->weight;
@@ -103,15 +82,16 @@ ErrorCode FamilyTree::creatTreeFromFile()
 			}
 			newMember->left = NULL;
 			newMember->right = NULL;
-			insert(newMember);
+
+			insert(newMember);//²åÈë¹¹½¨ºÃµÄ½Úµã
 		}
 
 
-		fin.close();
+		fin.close();//¹Ø±ÕÎÄ¼þ
 		return success;
 	}
 }
-void searchTree(Node* root, Node* & member, string name)//recursive function
+void searchTree(Node* root, Node*& member, string name)//µÝ¹éËÑË÷³ÉÔ±
 {
 	if (root == NULL)
 	{
@@ -132,18 +112,18 @@ void searchTree(Node* root, Node* & member, string name)//recursive function
 	}
 }
 
-Node* FamilyTree::search(string name)
+Node* FamilyTree::search(string name)//²éÕÒ²¢·µ»Ø½Úµã
 {
 	Node* member = NULL;
 	searchTree(root, member, name);
 	return member;
 }
-void FamilyTree::search(string name, Node* & member)
+void FamilyTree::search(string name, Node*& member)//²éÕÒ²¢°Ñ½á¹û¸¶¸ø½Úµã²ÎÊý
 {
 	member = NULL;
 	searchTree(root, member, name);
 }
-ErrorCode FamilyTree::insert(Node* newMember)
+ErrorCode FamilyTree::insert(Node* newMember)//²åÈë²¢·µ»Ø³É¹¦Óë·ñ
 {
 	if (root == NULL)
 	{
@@ -191,7 +171,7 @@ ErrorCode FamilyTree::insert(Node* newMember)
 		return success;
 	}
 }
-void deleteTree(Node* root, int * countPtr)
+void deleteTree(Node* root, int* countPtr)//µÝ¹éÉ¾³ýÊ÷
 {
 	if (root == NULL)
 	{
@@ -205,27 +185,27 @@ void deleteTree(Node* root, int * countPtr)
 		(*countPtr)++;
 	}
 }
-ErrorCode FamilyTree::deleteMember(Node* & member)
+ErrorCode FamilyTree::deleteMember(Node*& member)//É¾³ý½Úµã
 {
-	//Node* member = search(name);
-	if (member == NULL)
+	if (member == NULL)//ÎÞ´ËÈË
 	{
 		return failure;
 	}
 	else
 	{
 		int count = 0;
-		int * countPtr = &count;
-		Node* tempnode = search(member->motherName);
+		int* countPtr = &count;
+
+		Node* tempnode = search(member->motherName);//ÕÒµ½Ä¸Ç×»ò½ã½ã»ò¸ç¸ç
 		deleteTree(member, countPtr);
-		tempnode->right = NULL;
+		tempnode->right = NULL;//°ÑÄ¸Ç×£¨»ò½ã½ã¸ç¸ç£©µÄÓÒ×ÓÊ÷±ê¼ÇÎªNULL
+
 		size -= count;
 	}
 	return success;
 }
-ErrorCode FamilyTree::PrintNodeInformation(Node* member)
+ErrorCode FamilyTree::PrintNodeInformation(Node* member)//´òÓ¡½ÚµãÐÅÏ¢
 {
-	//Node* member = search(name);
 	if (member == NULL)
 	{
 		return failure;
@@ -233,44 +213,46 @@ ErrorCode FamilyTree::PrintNodeInformation(Node* member)
 	else
 	{
 		cout << "*********************" << endl;
-		cout << "ä»£æ•°ï¼šç¬¬" << member->generation << "ä»£"<<endl;
-		cout << "åå­—ï¼š" << member->name << endl;
-		cout << "æ€§åˆ«ï¼š";//<< (member->sex == 1) ? "ç”·" : "å¥³"
+		cout << "´úÊý£ºµÚ" << member->generation << "´ú" << endl;
+		cout << "Ãû×Ö£º" << member->name << endl;
+		cout << "ÐÔ±ð£º";//<< (member->sex == 1) ? "ÄÐ" : "Å®"
 		if (member->sex == 1) {
-			cout << "ç”·";
+			cout << "ÄÐ";
 		}
 		else {
-			cout << "å¥³";
+			cout << "Å®";
 		}
 		cout << endl;
-		cout << "ç”Ÿæ—¥ï¼š" << member->birthYear <<"å¹´"<< endl;
-		cout << "ä½“é‡ï¼š" << member->weight<<" kg" << endl;
-		cout << "çº¢ç»¿è‰²ç›²åŸºå› æƒ…å†µï¼š";
+
+		cout << "ÉúÈÕ£º" << member->birthYear << "Äê" << endl;
+		cout << "ÌåÖØ£º" << member->weight << " kg" << endl;
+
+		cout << "ºìÂÌÉ«Ã¤»ùÒòÇé¿ö£º";//·ÖÎªÄÐÅ®
 		if (member->sex == 1) {
 			if (member->colorGene == 1) {
-				cout << "XaYï¼Œæ˜¯çº¢ç»¿è‰²ç›²æ‚£è€…" << endl;
+				cout << "XaY£¬ÊÇºìÂÌÉ«Ã¤»¼Õß" << endl;
 			}
 			else {
-				cout << "XAYï¼Œä¸æ˜¯çº¢ç»¿è‰²ç›²æ‚£è€…" << endl;
+				cout << "XAY£¬²»ÊÇºìÂÌÉ«Ã¤»¼Õß" << endl;
 			}
 		}
 		else {
 			if (member->colorGene == 1) {
-				cout << "XaXaï¼Œæ˜¯çº¢ç»¿è‰²ç›²æ‚£è€…" << endl;
+				cout << "XaXa£¬ÊÇºìÂÌÉ«Ã¤»¼Õß" << endl;
 			}
-			else if(member->colorGene == 2){
-				cout << "XAXaï¼Œä¸æ˜¯çº¢ç»¿è‰²ç›²æ‚£è€…" << endl;
+			else if (member->colorGene == 2) {
+				cout << "XAXa£¬²»ÊÇºìÂÌÉ«Ã¤»¼Õß" << endl;
 			}
 			else {
-				cout << "XAXAï¼Œä¸æ˜¯çº¢ç»¿è‰²ç›²æ‚£è€…" << endl;
+				cout << "XAXA£¬²»ÊÇºìÂÌÉ«Ã¤»¼Õß" << endl;
 			}
 		}
-		cout << "çº¢ç»¿è‰²ç›²åŸºå› æƒ…å†µï¼š" << member->colorGene << endl; // sex=0->female->0:AA,1:aa,2:Aa    sex=1->male->0:A,1:a
+		cout << "ºìÂÌÉ«Ã¤»ùÒòÇé¿ö£º" << member->colorGene << endl; // sex=0->female->0:AA,1:aa,2:Aa    sex=1->male->0:A,1:a
 		cout << "*********************" << endl;
 		return success;
 	}
 }
-ErrorCode FamilyTree::markDeath(Node* member)
+ErrorCode FamilyTree::markDeath(Node* member)//±ê¼ÇËÀÍö
 {
 	if (member == NULL)
 	{
@@ -284,10 +266,9 @@ ErrorCode FamilyTree::markDeath(Node* member)
 	}
 }
 
-ErrorCode FamilyTree::recorrect(Node* member, int part, string item)
+ErrorCode FamilyTree::recorrect(Node* member, int part, string item)//¸ü¸Ä½ÚµãstringÐÅÏ¢
 {
-
-	switch (part)
+	switch (part)//¸ü¸ÄµÄ²¿·Ö
 	{
 	case 1:
 		member->name = item;
@@ -306,10 +287,9 @@ ErrorCode FamilyTree::recorrect(Node* member, int part, string item)
 
 }
 
-ErrorCode FamilyTree::recorrect(Node* member, int part, int item)
+ErrorCode FamilyTree::recorrect(Node* member, int part, int item)//¸ü¸Ä½ÚµãintÐÅÏ¢
 {
-
-	switch (part)
+	switch (part)//¸ü¸Ä²¿·Ö
 	{
 	case 2:
 		member->sex = item;
@@ -343,11 +323,11 @@ ErrorCode FamilyTree::recorrect(Node* member, int part, int item)
 
 }
 
-int FamilyTree::countAliveSize()
+int FamilyTree::countAliveSize()//Í³¼ÆÔÚÊÀÊýÄ¿
 {
 	return this->aliveSize;
 }
-void countTotalLife(Node* root, int* totalLifeSpan)
+void countTotalLife(Node* root, int* totalLifeSpan)//Í³¼Æ×ÜÊÙÃü£¨ÒÑËÀÍö
 {
 	if (root == NULL)
 	{
@@ -363,15 +343,17 @@ void countTotalLife(Node* root, int* totalLifeSpan)
 		countTotalLife(root->right, totalLifeSpan);
 	}
 }
-int FamilyTree::countAverageLifeSpan()
+int FamilyTree::countAverageLifeSpan()//Í³¼ÆÆ½¾ùÊÙÃü£¬ÎªÒÑËÀÍöÈËµÄÊÙÃü×ÜºÍ³ýÒÔÒÑËÀÍöÈËÊý
 {
 	int i = 0;
 	int alredyDeadSize = size - aliveSize;
+
 	int* totalLifeSpan = &i;
+
 	countTotalLife(root, totalLifeSpan);
 	return (*totalLifeSpan) / alredyDeadSize;
 }
-void countColorBlindness(Node *root, int * countPtr)
+void countColorBlindness(Node* root, int* countPtr)//¼ÆËã×ÜÉ«Ã¤ÈËÊýµÝ¹éº¯Êý
 {
 	if (root == NULL)
 	{
@@ -389,20 +371,20 @@ void countColorBlindness(Node *root, int * countPtr)
 
 	}
 }
-int FamilyTree::totalColorBlindness()
+int FamilyTree::totalColorBlindness()//¼ÆËã×ÜÉ«Ã¤ÈËÊý
 {
 	int count = 0;
 	int* countPtr = &count;
 	countColorBlindness(root, countPtr);
 	return count;
 }
-float FamilyTree::ColorBlindnessRate()
+float FamilyTree::ColorBlindnessRate()//É«Ã¤ÂÊ
 {
 	return totalColorBlindness() / size;
 }
 
 
-void printTree(Node* root)
+void printTree(Node* root)//´òÓ¡¼ÒÆ×Ê÷
 {
 	if (root == NULL)
 	{
@@ -421,7 +403,7 @@ void printTree(Node* root)
 		printTree(root->right);
 	}
 }
-void FamilyTree::display()
+void FamilyTree::display()//Õ¹Ê¾¼ÒÆ×Ê÷
 {
 	printTree(root);
 }

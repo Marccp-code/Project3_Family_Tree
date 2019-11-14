@@ -1,12 +1,14 @@
+/*½á¹¹ÌåNodeµÄÉùÃ÷£¬ÀàFamilyTreeµÄÉùÃ÷*/
 #pragma once
+//Í·ÎÄ¼ş²¿·Ö
 #include<iostream>
 #include<string>
 #include<fstream>
 
 using namespace std;
-enum ErrorCode { success, failure, overflow, underflow };
+enum ErrorCode { success, failure, overflow, underflow };//´íÎóÂë³£Á¿
 
-struct Node
+struct Node//¼ÒÍ¥³ÉÔ±½ÚµãÉùÃ÷
 {
 	string name;
 	bool sex;//sex=0->female  sex=1->male
@@ -16,64 +18,63 @@ struct Node
 	string motherName;
 	string husbandName;
 
-	bool isWife;//isWife=0->daughter  isWife=1->wife
+	bool isWife;//isWife=0->Å®¶ù  isWife=1->ÆŞ×Ó
 	bool isDeadOrEx;
 
-	int birthYear;
+	int birthYear;//0~3000
 
 
-	int colorGene;// sex=0->female->0:AA,1:aa,2:Aa    sex=1->male->0:a,1:A
-	int weight;
+	int colorGene;// sex=0->Å®ĞÔ->0:XAXA,1:XAXa,2:XaXa    sex=1->ÄĞĞÔ->0:XAY,1:XaY
+	int weight;//0~3000
 
-	Node* left;//2.isWife=0->daughter or son->left is husband/NULL, right is his/her bros and siss
-	Node* right;//isWife=1->wife->left is her husband's next wife, right is her children
-	//void PrintNodeInformation();
+	Node* left;//2.isWife=0->Å®¶ù»ò¶ù×Ó->left is husband/NULL, right is his/her bros and siss
+	Node* right;//isWife=1->ÆŞ×Ó->left is her husband's next wife, right is her children
+
 };
 
-class FamilyTree
+class FamilyTree//×åÆ×Ê÷µÄÀà
 {
 private:
-	int aliveSize;//assume today is 2019
+	int aliveSize;//»î×ÅµÄÈËµÄÊıÁ¿
 
 public:
 	int size;
-	Node* root;
-	FamilyTree()
+	Node* root;//¸ù½Úµã
+
+	FamilyTree()//¹¹Ôìº¯Êı
 	{
 		size = 0;
 		aliveSize = 0;
 		root = NULL;
 	}
-	~FamilyTree()
+	~FamilyTree()//Îö¹¹º¯Êı
 	{
 		deleteMember(root);
 	}
 
-	ErrorCode creatTreeFromFile();//here to creat a tree from a file
-	ErrorCode writeToFile();//write our tree to file
-	ErrorCode insert(Node* newMember);
-	Node* search(string name);//å¦‚æœå¾—åˆ°çš„memberçš„çˆ¶èŠ‚ç‚¹æŒ‡å‘memberçš„æŒ‡é’ˆä¸ç”¨ä¿®æ”¹
-	void search(string name, Node*& member);//å¦‚æœå¾—åˆ°çš„memberçš„çˆ¶èŠ‚ç‚¹æŒ‡å‘memberçš„æŒ‡é’ˆè¦ä¿®æ”¹
-	ErrorCode PrintNodeInformation(Node* member);
-	ErrorCode deleteMember(Node*& member);
+	ErrorCode creatTreeFromFile();//´ÓÎÄ¼ş¶ÁÈëÒ»¿ÃÊ÷×ö¼ÒÆ×
+	ErrorCode writeToFile();//°ÑÄÚ´æÖĞµÄ¼ÒÆ×Ê÷Ğ´½øÎÄ¼ş
+	ErrorCode insert(Node* newMember);//²åÈëĞÂ³öÉú³ÉÔ±
+	Node* search(string name);//Èç¹ûµÃµ½µÄmemberµÄ¸¸½ÚµãÖ¸ÏòmemberµÄÖ¸Õë²»ÓÃĞŞ¸Ä
+	void search(string name, Node*& member);//Èç¹ûµÃµ½µÄmemberµÄ¸¸½ÚµãÖ¸ÏòmemberµÄÖ¸ÕëÒªĞŞ¸Ä
+	ErrorCode PrintNodeInformation(Node* member);//´òÓ¡½ÚµãĞÅÏ¢
+	ErrorCode deleteMember(Node*& member);//É¾³ı½Úµã
+	ErrorCode recorrect(Node* member, int part, string item);//ĞŞ¸Ä½ÚµãĞÅÏ¢stringÀà
+	ErrorCode recorrect(Node* member, int part, int item);//ĞŞ¸Ä½ÚµãĞÅÏ¢intÀà
+	ErrorCode markDeath(Node* member);//±ê¼ÇËÀÍö
 
-	//è¿™é‡Œçš„æ–¹æ³•æ˜¯å…ˆåœ¨mainé‡Œé¢search,è¿”å›åˆ°ä¸€ä¸ªnode* å†è°ƒç”¨recorrectå‡½æ•°ï¼Œåœ¨miané‡Œé¢ç»™switchä»£å·,è¡¨ç¤ºä¿®æ”¹å“ªä¸€éƒ¨åˆ†,itemä¸ºä¿®æ”¹åçš„å†…å®¹
-	ErrorCode recorrect(Node* member, int part, string item);
-	ErrorCode recorrect(Node* member, int part, int item);
-	ErrorCode markDeath(Node* member);
-
-	int totalColorBlindness();
-	float ColorBlindnessRate();
-	int countAliveSize();
-	int FamilyTreeSize()
+	int totalColorBlindness();//Í³¼ÆÉ«Ã¤Çé¿ö
+	float ColorBlindnessRate();//É«Ã¤ÂÊ
+	int countAliveSize();//ÔÚÊÀÈËÊı
+	int FamilyTreeSize()//Í³¼Æ¼ÒÆ×¹æ¸ñ
 	{
 		return size;
 	}
-	int countAverageLifeSpan();//ç»Ÿè®¡å¹³å‡å¯¿å‘½
+	int countAverageLifeSpan();//Í³¼ÆÆ½¾ùÊÙÃü
 
-	void display();
+	void display();//Õ¹Ê¾±¾¼ÒÆ×ĞÅÏ¢
 
-	friend void writeTree(FILE* fout, Node* root);
-	friend void searchTree(Node* root, Node*& member, string name);//recursive function
+	friend void writeTree(FILE* fout, Node* root);//ÓÑÔªº¯ÊıĞ´ÈëÎÄ¼şµİ¹é
+	friend void searchTree(Node* root, Node*& member, string name);//ÓÑÔªº¯Êı²éÕÒÎÄ¼şµİ¹é
 
 };

@@ -198,6 +198,7 @@ ErrorCode FamilyTree::deleteMember(Node*& member)//删除节点
 
 		Node* tempnode = search(member->motherName);//找到母亲或姐姐或哥哥
 		deleteTree(member, countPtr);
+		if(tempnode!=NULL)
 		tempnode->right = NULL;//把母亲（或姐姐哥哥）的右子树标记为NULL
 
 		size -= count;

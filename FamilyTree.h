@@ -52,6 +52,9 @@ public:
 		deleteMember(root);
 	}
 
+	ErrorCode creatTreeFromExcel();
+	ErrorCode writeToExcel();
+	
 	ErrorCode creatTreeFromFile();//从文件读入一棵树做家谱
 	ErrorCode writeToFile();//把内存中的家谱树写进文件
 	ErrorCode insert(Node* newMember);//插入新出生成员

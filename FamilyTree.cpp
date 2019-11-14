@@ -23,6 +23,23 @@ void writeTree(FILE* fout, Node* root)//写入文件递归函数
 
 	}
 }
+void writeExcel(FILE* fout, Node* root)//写入文件递归函数
+{
+	if (root == NULL)//返回条件
+	{
+		return;
+	}
+	else
+	{
+		//格式化左对齐写入txt文本文件
+		fprintf(fout, "%s%s%d%s%d%s%d%s%s%s%s%s%d%s%d%s%d%s%d%s%d\n", root->name.c_str(), ",", root->sex, ",", root->generation, ",", root->lifeSpan, ",", root->motherName.c_str(), ",", root->husbandName.c_str(), ",", root->isWife, ",", root->isDeadOrEx, ",", root->birthYear, ",", root->colorGene, ",", root->weight);//name
+		//写入左子树
+		writeExcel(fout, root->left);
+		//写入右子树
+		writeExcel(fout, root->right);
+
+	}
+}
 ErrorCode FamilyTree::writeToFile()
 {
 	FILE* fout;
@@ -40,6 +57,29 @@ ErrorCode FamilyTree::writeToFile()
 		fprintf(fout, "name	sex	generation         lifeSpan        motherName    husbandName               isWife    isDead    birthYear             colorGene                weight\n");
 		//调用递归写入函数
 		writeTree(fout, root);
+	}
+
+	fclose(fout);//关闭文件
+
+	return success;
+}
+ErrorCode FamilyTree::writeToExcel()
+{
+	FILE* fout;
+
+	fopen_s(&fout, "FamilyTreeOutput.csv", "w+");//写入模式打开文件
+
+	if (fout == NULL)//打开失败
+	{
+		cout << "文件不能打开" << endl;
+		return failure;
+	}
+	else
+	{
+		//写入表头
+		fprintf(fout, "name,sex,generation,lifeSpan,motherName,husbandName,isWife,isDead,birthYear,colorGene,weight\n");
+		//调用递归写入函数
+		writeExcel(fout, root);
 	}
 
 	fclose(fout);//关闭文件
@@ -80,6 +120,68 @@ ErrorCode FamilyTree::creatTreeFromFile()
 			{
 				newMember->sex = 0;
 			}
+			newMember->left = NULL;
+			newMember->right = NULL;
+
+			insert(newMember);//插入构建好的节点
+		}
+
+
+		fin.close();//关闭文件
+		return success;
+	}
+}
+ErrorCode FamilyTree::creatTreeFromExcel()
+{
+	ifstream fin;
+	fin.open("FamilyTreeInput.csv", ios::in);//读取形式打开文件
+
+	if (!fin.is_open())//打开失败
+	{
+		cout << "文件不能打开" << endl;
+		return failure;
+	}
+	else//打开成功
+	{
+		string temp;
+		getline(fin, temp);
+
+		while (!fin.eof())//循环建树
+		{
+			Node* newMember = new Node;
+
+			//用输入参数构建节点
+			getline(fin, temp);
+			char *token;
+			char s[2] = ",";
+			string information[11];
+			int count = 0;
+
+			/* 获取第一个子字符串 */
+			token = strtok((char*)temp.c_str(), s);
+
+			/* 继续获取其他的子字符串 */
+			while (token != NULL) {
+				//cout << token << endl;
+				information[count++] = token;
+				token = strtok(NULL, s);
+			}
+			newMember -> name = information[0];
+			newMember -> sex = (information[1][0] == 'M') ? 1 : 0;//sex=0->female  sex=1->male
+			newMember->generation = atoi(information[2].c_str());
+			newMember->lifeSpan = atoi(information[3].c_str());//2019-birthYear
+
+			newMember->motherName = information[4];
+			newMember->husbandName = information[5];
+
+			newMember->isWife = atoi(information[6].c_str());//isWife=0->女儿  isWife=1->妻子
+			newMember->isDeadOrEx = atoi(information[7].c_str());
+
+			newMember->birthYear = atoi(information[8].c_str());//0~3000
+
+
+			newMember->colorGene = atoi(information[9].c_str());// sex=0->女性->0:XAXA,1:XAXa,2:XaXa    sex=1->男性->0:XAY,1:XaY
+			newMember->weight = atoi(information[10].c_str());//0~3000
 			newMember->left = NULL;
 			newMember->right = NULL;
 
@@ -198,8 +300,8 @@ ErrorCode FamilyTree::deleteMember(Node*& member)//删除节点
 
 		Node* tempnode = search(member->motherName);//找到母亲或姐姐或哥哥
 		deleteTree(member, countPtr);
-		if(tempnode!=NULL)
-		tempnode->right = NULL;//把母亲（或姐姐哥哥）的右子树标记为NULL
+		if (tempnode != NULL)
+			tempnode->right = NULL;//把母亲（或姐姐哥哥）的右子树标记为NULL
 
 		size -= count;
 	}
@@ -362,7 +464,7 @@ void countColorBlindness(Node* root, int* countPtr)//计算总色盲人数递归函数
 	}
 	else
 	{
-		if (root->colorGene == 1 && !(root->isWife))
+		if (root->colorGene == 1)
 		{
 			(*countPtr)++;
 		}

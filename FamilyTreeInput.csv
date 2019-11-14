@@ -1,0 +1,9 @@
+name,sex,generation,lifeSpan,motherName,husbandName,isWife,isDead,birthYear,colorGene,weight
+Calvin,MALE,1,70,Janet,NULL,0,1,1896,0,70
+Hazel,FEMALE,1,72,Elizabeth,Calvin,1,1,1900,0,55
+James,MALE,2,90,Hazel,NULL,0,1,1922,0,75
+Richael,FEMALE,2,90,Hazel,NULL,0,1,1922,0,50
+Jade,FEMALE,2,89,Rose,James,1,1,1923,0,60
+Tommy,MALE,3,70,Jade,NULL,0,0,1949,0,80
+Katty,FEMALE,1,72,Elizabeth,Calvin,1,1,1900,0,55
+Charlie,MALE,2,90,Katty,NULL,0,1,1922,0,75

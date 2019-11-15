@@ -1,14 +1,14 @@
-/*ç»“æ„ä½“Nodeçš„å£°æ˜ï¼Œç±»FamilyTreeçš„å£°æ˜*/
+/*½á¹¹ÌåNodeµÄÉùÃ÷£¬ÀàFamilyTreeµÄÉùÃ÷*/
 #pragma once
-//å¤´æ–‡ä»¶éƒ¨åˆ†
+//Í·ÎÄ¼ş²¿·Ö
 #include<iostream>
 #include<string>
 #include<fstream>
 
 using namespace std;
-enum ErrorCode { success, failure, overflow, underflow };//é”™è¯¯ç å¸¸é‡
+enum ErrorCode { success, failure, overflow, underflow };//´íÎóÂë³£Á¿
 
-struct Node//å®¶åº­æˆå‘˜èŠ‚ç‚¹å£°æ˜
+struct Node//¼ÒÍ¥³ÉÔ±½ÚµãÉùÃ÷
 {
 	string name;
 	bool sex;//sex=0->female  sex=1->male
@@ -18,66 +18,66 @@ struct Node//å®¶åº­æˆå‘˜èŠ‚ç‚¹å£°æ˜
 	string motherName;
 	string husbandName;
 
-	bool isWife;//isWife=0->å¥³å„¿  isWife=1->å¦»å­
+	bool isWife;//isWife=0->Å®¶ù  isWife=1->ÆŞ×Ó
 	bool isDeadOrEx;
 
 	int birthYear;//0~3000
 
 
-	int colorGene;// sex=0->å¥³æ€§->0:XAXA,1:XAXa,2:XaXa    sex=1->ç”·æ€§->0:XAY,1:XaY
+	int colorGene;// sex=0->Å®ĞÔ->0:XAXA,1:XAXa,2:XaXa    sex=1->ÄĞĞÔ->0:XAY,1:XaY
 	int weight;//0~3000
 
-	Node* left;//2.isWife=0->å¥³å„¿æˆ–å„¿å­->left is husband/NULL, right is his/her bros and siss
-	Node* right;//isWife=1->å¦»å­->left is her husband's next wife, right is her children
+	Node* left;//2.isWife=0->Å®¶ù»ò¶ù×Ó->left is husband/NULL, right is his/her bros and siss
+	Node* right;//isWife=1->ÆŞ×Ó->left is her husband's next wife, right is her children
 
 };
 
-class FamilyTree//æ—è°±æ ‘çš„ç±»
+class FamilyTree//×åÆ×Ê÷µÄÀà
 {
 private:
-	int aliveSize;//æ´»ç€çš„äººçš„æ•°é‡
+	int aliveSize;//»î×ÅµÄÈËµÄÊıÁ¿
 
 public:
 	int size;
-	Node* root;//æ ¹èŠ‚ç‚¹
+	Node* root;//¸ù½Úµã
 
-	FamilyTree()//æ„é€ å‡½æ•°
+	FamilyTree()//¹¹Ôìº¯Êı
 	{
 		size = 0;
 		aliveSize = 0;
 		root = NULL;
 	}
-	~FamilyTree()//ææ„å‡½æ•°
+	~FamilyTree()//Îö¹¹º¯Êı
 	{
 		deleteMember(root);
 	}
 
-	ErrorCode creatTreeFromExcel();
-	ErrorCode writeToExcel();
+	ErrorCode creatTreeFromExcel();//´ÓExcelÎÄ¼ş¶ÁÈëÒ»¿ÃÊ÷×ö¼ÒÆ×
+	ErrorCode writeToExcel();//°ÑExcelÄÚ´æÖĞµÄ¼ÒÆ×Ê÷Ğ´½øÎÄ¼ş
 
-	ErrorCode creatTreeFromFile();//ä»æ–‡ä»¶è¯»å…¥ä¸€æ£µæ ‘åšå®¶è°±
-	ErrorCode writeToFile();//æŠŠå†…å­˜ä¸­çš„å®¶è°±æ ‘å†™è¿›æ–‡ä»¶
-	ErrorCode insert(Node* newMember);//æ’å…¥æ–°å‡ºç”Ÿæˆå‘˜
-	Node* search(string name);//å¦‚æœå¾—åˆ°çš„memberçš„çˆ¶èŠ‚ç‚¹æŒ‡å‘memberçš„æŒ‡é’ˆä¸ç”¨ä¿®æ”¹
-	void search(string name, Node*& member);//å¦‚æœå¾—åˆ°çš„memberçš„çˆ¶èŠ‚ç‚¹æŒ‡å‘memberçš„æŒ‡é’ˆè¦ä¿®æ”¹
-	ErrorCode PrintNodeInformation(Node* member);//æ‰“å°èŠ‚ç‚¹ä¿¡æ¯
-	ErrorCode deleteMember(Node*& member);//åˆ é™¤èŠ‚ç‚¹
-	ErrorCode recorrect(Node* member, int part, string item);//ä¿®æ”¹èŠ‚ç‚¹ä¿¡æ¯stringç±»
-	ErrorCode recorrect(Node* member, int part, int item);//ä¿®æ”¹èŠ‚ç‚¹ä¿¡æ¯intç±»
-	ErrorCode markDeath(Node* member);//æ ‡è®°æ­»äº¡
+	ErrorCode creatTreeFromFile();//´ÓÎÄ¼ş¶ÁÈëÒ»¿ÃÊ÷×ö¼ÒÆ×
+	ErrorCode writeToFile();//°ÑÄÚ´æÖĞµÄ¼ÒÆ×Ê÷Ğ´½øÎÄ¼ş
+	ErrorCode insert(Node* newMember);//²åÈëĞÂ³öÉú³ÉÔ±
+	Node* search(string name);//Èç¹ûµÃµ½µÄmemberµÄ¸¸½ÚµãÖ¸ÏòmemberµÄÖ¸Õë²»ÓÃĞŞ¸Ä
+	void search(string name, Node*& member);//Èç¹ûµÃµ½µÄmemberµÄ¸¸½ÚµãÖ¸ÏòmemberµÄÖ¸ÕëÒªĞŞ¸Ä
+	ErrorCode PrintNodeInformation(Node* member);//´òÓ¡½ÚµãĞÅÏ¢
+	ErrorCode deleteMember(Node*& member);//É¾³ı½Úµã
+	ErrorCode recorrect(Node* member, int part, string item);//ĞŞ¸Ä½ÚµãĞÅÏ¢stringÀà
+	ErrorCode recorrect(Node* member, int part, int item);//ĞŞ¸Ä½ÚµãĞÅÏ¢intÀà
+	ErrorCode markDeath(Node* member);//±ê¼ÇËÀÍö
 
-	int totalColorBlindness();//ç»Ÿè®¡è‰²ç›²æƒ…å†µ
-	float ColorBlindnessRate();//è‰²ç›²ç‡
-	int countAliveSize();//åœ¨ä¸–äººæ•°
-	int FamilyTreeSize()//ç»Ÿè®¡å®¶è°±è§„æ ¼
+	int totalColorBlindness();//Í³¼ÆÉ«Ã¤Çé¿ö
+	float ColorBlindnessRate();//É«Ã¤ÂÊ
+	int countAliveSize();//ÔÚÊÀÈËÊı
+	int FamilyTreeSize()//Í³¼Æ¼ÒÆ×¹æ¸ñ
 	{
 		return size;
 	}
-	int countAverageLifeSpan();//ç»Ÿè®¡å¹³å‡å¯¿å‘½
+	int countAverageLifeSpan();//Í³¼ÆÆ½¾ùÊÙÃü
 
-	void display();//å±•ç¤ºæœ¬å®¶è°±ä¿¡æ¯
+	void display();//Õ¹Ê¾±¾¼ÒÆ×ĞÅÏ¢
 
-	friend void writeTree(FILE* fout, Node* root);//å‹å…ƒå‡½æ•°å†™å…¥æ–‡ä»¶é€’å½’
-	friend void searchTree(Node* root, Node*& member, string name);//å‹å…ƒå‡½æ•°æŸ¥æ‰¾æ–‡ä»¶é€’å½’
+	friend void writeTree(FILE* fout, Node* root);//ÓÑÔªº¯ÊıĞ´ÈëÎÄ¼şµİ¹é
+	friend void searchTree(Node* root, Node*& member, string name);//ÓÑÔªº¯Êı²éÕÒÎÄ¼şµİ¹é
 
 };
